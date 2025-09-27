@@ -1,0 +1,85 @@
+import numpy as np
+
+import matplotlib.pyplot as plt
+
+c = 3e8
+
+E = 1.0  # let
+
+B = 1.0  # let
+
+
+
+# Velocity range
+
+v = np.linspace(0.01*c, 0.9999*c, 500)
+
+beta = v / c
+
+gamma = 1 / np.sqrt(1 - beta**2)
+
+
+
+# Lorentz transformations (for fields perpendicular to velocity)
+
+E_lorentz = gamma * (E + beta * c * B)
+
+B_lorentz = gamma * (B - beta * E / c)
+
+
+
+# Galilean transformations (fields don't transform)
+
+E_galilean = np.ones_like(v) * E
+
+B_galilean = np.ones_like(v) * B
+
+
+
+# Plotting
+
+plt.figure(figsize=(10,6))
+
+
+
+# Electric Field
+
+plt.subplot(2,1,1)
+
+plt.plot(beta, E_galilean, label="Galilean (E)", linestyle="--")
+
+plt.plot(beta, E_lorentz, label="Lorentz (E)", linewidth=2)
+
+plt.ylabel("Electric Field $E'$ (arb. units)")
+
+plt.legend()
+
+plt.grid()
+
+
+
+# Magnetic Field
+
+plt.subplot(2,1,2)
+
+plt.plot(beta, B_galilean, label="Galilean (B)", linestyle="--")
+
+plt.plot(beta, B_lorentz, label="Lorentz (B)", linewidth=2)
+
+plt.xlabel("Velocity fraction $v/c$")
+
+plt.ylabel("Magnetic Field $B'$ (arb. units)")
+
+plt.legend()
+
+plt.grid()
+
+
+
+plt.suptitle("Field Transformation: Galilean vs Lorentz", fontsize=14)
+
+plt.tight_layout(rect=[0, 0, 1, 0.96])
+
+plt.show()
+
+
